@@ -39,6 +39,8 @@ logger.addHandler(file_handler)
 
 dagshub.init(repo_owner='PrathamDesai07', repo_name='MLFlow-Experiments-learning', mlflow=True)
 mlflow.set_tracking_uri('https://dagshub.com/PrathamDesai07/MLFlow-Experiments-learning.mlflow')
+
+mlflow.autolog()
 mlflow.set_experiment('YT-MLOPS-Exp1')
 
 def load_dataset(test_size: float) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
@@ -73,10 +75,10 @@ def metrics_logging(max_depth: int, n_estimators: int,  y_test: np.ndarray, y_pr
         accuracy = accuracy_score(y_test, y_pred)
         logger.debug(f'Accuraacy of model calculated: {accuracy}')
 
-        mlflow.log_metric('Accuracy', accuracy)
-        mlflow.log_metric('max_depth', max_depth)
-        mlflow.log_metric('n_estimators', n_estimators)
-        logger.debug(f'Metrics logged at mlFlow')
+        # mlflow.log_metric('Accuracy', accuracy)
+        # mlflow.log_metric('max_depth', max_depth)
+        # mlflow.log_metric('n_estimators', n_estimators)
+        # logger.debug(f'Metrics logged at mlFlow')
 
         cm = confusion_matrix(y_test, y_pred)
         plt.figure(figsize=(6,6))
@@ -87,7 +89,7 @@ def metrics_logging(max_depth: int, n_estimators: int,  y_test: np.ndarray, y_pr
         plt.savefig("./reports/Confusion-matrix.png")
         logger.debug(f'cm saved at path: ./reports/Confusion-matrix.png')
 
-        mlflow.log_artifact("./reports/Confusion-matrix.png")
+        # mlflow.log_artifact("./reports/Confusion-matrix.png")
         mlflow.log_artifact(__file__)
 
         mlflow.set_tags({"Author": 'Nan ji Bhai', "Project": "Wine Classification"})
